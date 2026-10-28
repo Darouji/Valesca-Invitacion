@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#100b24">
+  <meta name="description" content="Una invitación interactiva de cumpleaños con estética cartoon y televisión retro.">
+  <title>Valesca Calle · Nivel 30 desbloqueado</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/config.js" defer></script>
+  <script src="js/audio.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <main class="app-shell" id="appShell">
+    <div class="ambient-grain" aria-hidden="true"></div>
+
+    <section class="scene intro-scene" id="introScene" aria-label="Introducción interactiva del televisor">
+      <header class="top-hud">
+        <div class="signal-id"><span class="live-dot"></span><span>ARCHIVO CARTOON</span><small>CH. 00</small></div>
+        <button class="skip-button" id="skipIntro" type="button">IR A LA INVITACIÓN <span aria-hidden="true">↗</span></button>
+      </header>
+
+      <div class="intro-copy">
+        <p class="eyebrow">TRANSMISIÓN ESPECIAL · 2000s</p>
+        <h1>BUSCANDO<br><em>SEÑAL...</em></h1>
+        <p class="intro-subtitle">Este televisor lleva demasiado tiempo apagado.</p>
+      </div>
+
+      <div class="tv-wrap">
+        <div class="tv-aerial aerial-left" aria-hidden="true"></div>
+        <div class="tv-aerial aerial-right" aria-hidden="true"></div>
+        <div class="tv-shell" id="tvShell">
+          <div class="tv-brandline"><span class="brand-mark">CN<span>×</span></span><span class="tv-model">CARTOON C-2000</span></div>
+          <div class="tv-bezel">
+            <button class="tv-screen" id="tvScreen" type="button" aria-label="Tocar el televisor para encenderlo y sintonizar">
+              <div class="screen-fallback" id="screenFallback" aria-hidden="true">
+                <div class="fallback-sun"></div><div class="fallback-zigzag"></div>
+                <span class="fallback-top">SEÑAL NO IDENTIFICADA</span>
+                <strong id="fallbackNumber">00</strong>
+                <span class="fallback-bottom">POR FAVOR, SINTONIZA</span>
+              </div>
+              <img class="channel-image" id="channelImage" alt="Imagen del canal sintonizado" hidden>
+              <div class="screen-vignette" aria-hidden="true"></div>
+              <div class="static-layer" id="staticLayer" aria-hidden="true" hidden></div>
+              <img class="crack-layer" id="crackLayer" src="assets/images/efectos/grieta-1.svg" alt="" hidden>
+              <div class="screen-off" id="screenOff"><span class="off-glint"></span></div>
+              <span class="screen-prompt" id="screenPrompt">TOCA PARA ENCENDER</span>
+              <span class="screen-channel-caption" id="screenChannelCaption" hidden>CH. 01 · BUSCANDO SEÑAL</span>
+              <span class="screen-reflection" aria-hidden="true"></span>
+            </button>
+          </div>
+          <div class="tv-controls">
+            <div class="speaker-grille" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="dial-group" aria-hidden="true"><span class="dial dial-large"><b></b></span><span class="dial"><b></b></span></div>
+            <div class="power-led" id="powerLed"><span></span><small>POWER</small></div>
+          </div>
+          <div class="tv-bottom-lip" aria-hidden="true"></div>
+        </div>
+        <div class="tv-foot foot-left" aria-hidden="true"></div><div class="tv-foot foot-right" aria-hidden="true"></div>
+      </div>
+
+      <div class="interaction-panel">
+        <div class="progress-row"><span id="progressLabel">SEÑAL DESCONECTADA</span><span id="progressCount">00 / 07</span></div>
+        <div class="progress-track"><span id="progressFill"></span></div>
+        <p class="action-hint" id="actionHint">TOCA EL TELEVISOR PARA DESPERTARLO</p>
+        <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="true"><span class="sound-icon" aria-hidden="true">♫</span><span id="soundToggleText">SONIDO ACTIVADO</span></button>
+      </div>
+
+      <div class="intro-footer"><span>VOL. 30</span><span>NO AJUSTAR LA ANTENA</span><span>EST. 2000</span></div>
+    </section>
+
+    <section class="scene invite-scene" id="inviteScene" aria-label="Invitación de cumpleaños" hidden>
+      <header class="invite-top">
+        <div class="signal-id"><span class="live-dot"></span><span>SEÑAL RECUPERADA</span></div>
+        <span class="special-stamp">ESPECIAL Nº 30</span>
+      </header>
+
+      <div class="invite-portal" id="invitePortal">
+        <div class="character-ring" id="characterRing" aria-label="Marco de personajes de dibujos animados"></div>
+        <div class="flip-card" id="flipCard" role="button" tabindex="0" aria-label="Girar tarjeta para ver los datos de la invitación">
+          <div class="flip-inner" id="flipInner">
+            <article class="invite-face invite-front">
+              <div class="card-topline"><span>TRANSMISIÓN ESPECIAL</span><span>● REC</span></div>
+              <div class="comic-burst burst-one" aria-hidden="true">★</div>
+              <p class="mini-label">ESTÁS INVITADO A...</p>
+              <h2>¡NIVEL 30<br><span>DESBLOQUEADO!</span></h2>
+              <p class="birthday-name">VALESCA CALLE</p>
+              <div class="card-divider"><span>✦</span><i></i><span>✦</span></div>
+              <p class="invite-message">Una celebración salida directamente de los años 2000.</p>
+              <div class="dress-code"><span class="mission-tag">MISIÓN OBLIGATORIA</span><p>Ven con tu mejor disfraz inspirado en tus dibujos animados favoritos de <b>Cartoon Network de los 2000.</b></p></div>
+              <p class="card-footer-text">PREPÁRATE PARA VOLVER A TU INFANCIA</p>
+              <button class="flip-cta" type="button" data-flip>VER DATOS DEL EVENTO <span aria-hidden="true">↻</span></button>
+            </article>
+            <article class="invite-face invite-back" aria-label="Fecha, hora y lugar">
+              <div class="card-topline"><span>CANAL 30 · EVENTO EN VIVO</span><span>● REC</span></div>
+              <div class="back-tv-icon" aria-hidden="true"><span>30</span><i></i></div>
+              <p class="mini-label">GUARDA LA FECHA</p>
+              <h2>¡NOS VEMOS<br><span>EN EL CANAL 30!</span></h2>
+              <div class="event-details">
+                <div class="event-detail"><span class="detail-icon" aria-hidden="true">✦</span><div><small>¿CUÁNDO?</small><strong>14 DE NOVIEMBRE</strong></div></div>
+                <div class="event-detail"><span class="detail-icon" aria-hidden="true">◷</span><div><small>¿A QUÉ HORA?</small><strong>18:00 HORAS</strong></div></div>
+                <div class="event-detail"><span class="detail-icon" aria-hidden="true">⌖</span><div><small>¿DÓNDE?</small><strong>PORTEZUELO 4516</strong></div></div>
+              </div>
+              <div class="back-note">UNA NOCHE PARA CELEBRAR, DISFRAZARSE Y REVIVIR LOS MEJORES RECUERDOS ANIMADOS.</div>
+              <button class="flip-cta" type="button" data-flip>VOLVER A LA INVITACIÓN <span aria-hidden="true">↺</span></button>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <footer class="invite-controls">
+        <button class="download-button" id="downloadInvite" type="button"><span aria-hidden="true">↓</span> DESCARGAR ESTA CARA COMO IMAGEN</button>
+        <p id="downloadHint">GUÁRDALA EN TU GALERÍA · TOCA LA TARJETA PARA GIRARLA</p>
+      </footer>
+      <span class="invite-corner corner-tl" aria-hidden="true">✳</span><span class="invite-corner corner-br" aria-hidden="true">✳</span>
+    </section>
+
+    <div class="full-flash" id="fullFlash" aria-hidden="true"></div>
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  </main>
+</body>
+</html>
