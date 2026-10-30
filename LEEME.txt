@@ -1,0 +1,25 @@
+AJUSTE PUNTUAL — Valesca
+
+Solo hay dos cambios de código:
+
+1) Reemplaza js/config.js por el config.js incluido aquí.
+   - Billy: position 67 -> 64.
+   - Mandy: position 83 -> 80.
+   - El canal combinado Billy y Mandy se encuadra con objectPosition: 85% center para desplazar la imagen hacia la izquierda y mostrar mejor el lado derecho, donde está Mandy.
+   - No se modifica ninguna otra posición ni ningún otro canal.
+
+2) En tu js/main.js, dentro de showImageOrFallback(index), localiza estas líneas:
+
+    channelImage.hidden = true;
+    channelComposite.hidden = true;
+    channelComposite.replaceChildren();
+    screenFallback.hidden = true;
+
+   Inmediatamente después de ellas, agrega esta única línea:
+
+    channelImage.style.objectPosition = channel?.objectPosition || "center";
+
+   Puedes copiarla también desde js/main.js.patch.
+
+No reemplaces index.html, css/styles.css, js/audio.js ni las imágenes.
+No se cambian golpes, secuencia de canales, sonidos, animaciones, personajes restantes ni textos.

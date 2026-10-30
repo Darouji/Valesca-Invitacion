@@ -5,7 +5,6 @@
  * El octavo golpe rompe el televisor.
  *
  * Personajes: PNG individuales dentro de assets/images/personajes/.
- * Las posiciones usan el borde indicado y un porcentaje a lo largo de ese borde.
  */
 window.INVITE_CONFIG = {
   birthdayName: "Valesca Calle",
@@ -24,8 +23,9 @@ window.INVITE_CONFIG = {
       label: "CH. 03 · ED, EDD Y EDDIE",
     },
     {
-      // OJO: el canal usa el JPG de /canales, no los PNG del marco final.
+      // El JPG de canales se desplaza visualmente a la izquierda para mostrar completa a Mandy.
       image: "assets/images/canales/Billy y Mandy.jpg",
+      objectPosition: "85% center",
       label: "CH. 04 · LAS SOMBRÍAS AVENTURAS DE BILLY Y MANDY",
     },
     {
@@ -104,7 +104,7 @@ window.INVITE_CONFIG = {
       floatX: 2,
       duration: 3.8,
     },
-    /* Samurai Jack vuelve al lateral derecho, algo más abajo que antes. */
+    /* Samurai Jack conserva su posición actual. */
     {
       image: "assets/images/personajes/Samurai-Jack.png",
       edge: "right",
@@ -125,11 +125,11 @@ window.INVITE_CONFIG = {
       floatX: 3,
       duration: 4.0,
     },
-    /* Billy y Mandy ocupan el lateral izquierdo, frente a Scooby-Doo. */
+    /* Billy y Mandy suben ligeramente para separarse de Ben 10 y del personaje superior. */
     {
       image: "assets/images/personajes/Billy.png",
       edge: "left",
-      position: 67,
+      position: 64,
       size: 164,
       peek: 106,
       float: 7,
@@ -139,7 +139,7 @@ window.INVITE_CONFIG = {
     {
       image: "assets/images/personajes/Mandy.png",
       edge: "left",
-      position: 83,
+      position: 80,
       size: 160,
       peek: 103,
       float: 6,

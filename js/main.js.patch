@@ -1,0 +1,11 @@
+--- a/js/main.js
++++ b/js/main.js
+@@
+     channelImage.hidden = true;
+     channelComposite.hidden = true;
+     channelComposite.replaceChildren();
+     screenFallback.hidden = true;
++    // Ajuste de encuadre por canal; los demás conservan el centrado habitual.
++    channelImage.style.objectPosition = channel?.objectPosition || "center";
+ 
+     if (sources.length > 1) {
