@@ -1,13 +1,20 @@
 /*
  * CONFIGURACIÓN DE IMÁGENES — Valesca Calle
- * Canales: 7 sintonizaciones; el octavo golpe rompe el televisor.
- * Billy.png y Mandy.png deben estar en assets/images/personajes/.
- * Si tus nombres difieren, modifica únicamente las rutas de las dos capas.
+ *
+ * Canales: siete imágenes dentro de assets/images/canales/.
+ * El octavo golpe rompe el televisor.
+ *
+ * Personajes: PNG individuales dentro de assets/images/personajes/.
+ * Las posiciones usan el borde indicado y un porcentaje a lo largo de ese borde.
  */
 window.INVITE_CONFIG = {
   birthdayName: "Valesca Calle",
+
   channels: [
-    { image: "assets/images/canales/Ben-10.jpg", label: "CH. 01 · BEN 10" },
+    {
+      image: "assets/images/canales/Ben-10.jpg",
+      label: "CH. 01 · BEN 10",
+    },
     {
       image: "assets/images/canales/Chicas-SuperPoderosas.jpg",
       label: "CH. 02 · LAS CHICAS SUPERPODEROSAS",
@@ -17,11 +24,8 @@ window.INVITE_CONFIG = {
       label: "CH. 03 · ED, EDD Y EDDIE",
     },
     {
-      images: [
-        "assets/images/personajes/Billy.png",
-        "assets/images/personajes/Mandy.png",
-      ],
-      labels: ["BILLY", "MANDY"],
+      // OJO: el canal usa el JPG de /canales, no los PNG del marco final.
+      image: "assets/images/canales/Billy y Mandy.jpg",
       label: "CH. 04 · LAS SOMBRÍAS AVENTURAS DE BILLY Y MANDY",
     },
     {
@@ -37,8 +41,8 @@ window.INVITE_CONFIG = {
       label: "CH. 07 · SAMURAI JACK",
     },
   ],
+
   characters: [
-    /* Ben: se acerca un poco más desde la esquina inferior izquierda. */
     {
       image: "assets/images/personajes/Ben-10.png",
       edge: "bottom",
@@ -49,13 +53,13 @@ window.INVITE_CONFIG = {
       floatX: 2,
       duration: 3.7,
     },
-    /* Las chicas: más profundidad para que se vean las tres caras completas. */
+    /* Arriba solo quedan las Chicas Superpoderosas y Ed, Edd y Eddy. */
     {
       image: "assets/images/personajes/Chicas-Superpoderosas.png",
       edge: "top",
-      position: 19,
-      size: 222,
-      peek: 151,
+      position: 24,
+      size: 242,
+      peek: 184,
       float: 7,
       floatX: 3,
       duration: 4.6,
@@ -70,13 +74,12 @@ window.INVITE_CONFIG = {
       floatX: 2,
       duration: 3.5,
     },
-    /* Ed, Edd y Eddie: se aumenta el tamaño y el área visible para incluir a Ed. */
     {
       image: "assets/images/personajes/Ed-Edd-Eddie.png",
       edge: "top",
-      position: 79,
-      size: 224,
-      peek: 147,
+      position: 76,
+      size: 236,
+      peek: 184,
       float: 8,
       floatX: 3,
       duration: 4.9,
@@ -101,13 +104,13 @@ window.INVITE_CONFIG = {
       floatX: 2,
       duration: 3.8,
     },
-    /* Jack sube hacia la esquina superior derecha y deja libre el final del título. */
+    /* Samurai Jack vuelve al lateral derecho, algo más abajo que antes. */
     {
       image: "assets/images/personajes/Samurai-Jack.png",
       edge: "right",
-      position: 17,
+      position: 42,
       size: 146,
-      peek: 82,
+      peek: 86,
       float: 6,
       floatX: 2,
       duration: 4.6,
@@ -122,23 +125,23 @@ window.INVITE_CONFIG = {
       floatX: 3,
       duration: 4.0,
     },
-    /* Billy y Mandy también rellenan el hueco que dejó Pikachu en el marco. */
+    /* Billy y Mandy ocupan el lateral izquierdo, frente a Scooby-Doo. */
     {
       image: "assets/images/personajes/Billy.png",
-      edge: "top",
-      position: 46,
-      size: 160,
-      peek: 104,
+      edge: "left",
+      position: 67,
+      size: 164,
+      peek: 106,
       float: 7,
       floatX: 2,
       duration: 3.6,
     },
     {
       image: "assets/images/personajes/Mandy.png",
-      edge: "top",
-      position: 61,
-      size: 154,
-      peek: 101,
+      edge: "left",
+      position: 83,
+      size: 160,
+      peek: 103,
       float: 6,
       floatX: 2,
       duration: 4.4,
