@@ -10,6 +10,11 @@
   let musicSource = null;
   let musicBus = null;
 
+  // Control de reproducción al cambiar de aplicación.
+  let resumeAudioAfterBackground = false;
+  let contextWasRunning = false;
+  let backgroundSuspendPromise = null;
+
   function getContext() {
     if (!context) {
       const AudioContextClass =
@@ -19,24 +24,46 @@
       master = context.createGain();
       master.gain.value = enabled ? 0.58 : 0;
       master.connect(context.destination);
+      context.addEventListener("statechange", () => {
+        if (context?.state === "running" && !document.hidden) {
+          contextWasRunning = true;
+        }
+      });
     }
     return context;
   }
 
   async function unlock() {
     const ctx = getContext();
-    if (ctx && ctx.state === "suspended") {
+
+    if (
+      ctx &&
+      !document.hidden &&
+      (ctx.state === "suspended" || ctx.state === "interrupted")
+    ) {
       try {
         await ctx.resume();
       } catch (_) {
         /* El navegador puede bloquear el audio. */
       }
     }
+
+    if (ctx?.state === "running" && !document.hidden) {
+      contextWasRunning = true;
+      resumeAudioAfterBackground = false;
+    }
+
     return !!ctx;
   }
 
   function setEnabled(value) {
     enabled = !!value;
+
+    if (!enabled) {
+      resumeAudioAfterBackground = false;
+      contextWasRunning = false;
+    }
+
     const ctx = getContext();
     if (ctx && master) {
       const now = ctx.currentTime;
@@ -55,7 +82,9 @@
     delay = 0,
   ) {
     const ctx = getContext();
-    if (!ctx || !enabled) return;
+    if (!ctx || !enabled || document.hidden || ctx.state !== "running") {
+      return;
+    }
     const start = ctx.currentTime + delay;
     const length = Math.max(1, Math.floor(ctx.sampleRate * duration));
     const buffer = ctx.createBuffer(1, length, ctx.sampleRate);
@@ -93,7 +122,9 @@
     q = 1,
   }) {
     const ctx = getContext();
-    if (!ctx || !enabled) return;
+    if (!ctx || !enabled || document.hidden || ctx.state !== "running") {
+      return;
+    }
     const start = ctx.currentTime + delay;
     const oscillator = ctx.createOscillator();
     const gain = ctx.createGain();
@@ -309,7 +340,15 @@
 
   function startMusic() {
     const ctx = getContext();
-    if (!ctx || !enabled || musicSource) return;
+    if (
+      !ctx ||
+      !enabled ||
+      document.hidden ||
+      ctx.state !== "running" ||
+      musicSource
+    ) {
+      return;
+    }
     if (!musicBuffer) musicBuffer = buildMysteryLoop(ctx);
     musicBus = ctx.createGain();
     musicBus.gain.setValueAtTime(0.0001, ctx.currentTime);
@@ -342,6 +381,64 @@
       if (musicSource === source) musicSource = null;
       if (musicBus === bus) musicBus = null;
     }, 650);
+  }
+
+  // Suspende toda la reproducción cuando la página pasa a segundo plano.
+  function pauseForBackground() {
+    if (!context || context.state === "closed") return;
+
+    if (
+      enabled &&
+      (context.state === "running" ||
+        context.state === "interrupted" ||
+        contextWasRunning)
+    ) {
+      resumeAudioAfterBackground = true;
+    }
+
+    contextWasRunning = false;
+
+    if (context.state === "running" || context.state === "interrupted") {
+      backgroundSuspendPromise = context.suspend().catch(() => {
+        // El navegador puede suspender el contexto antes.
+      });
+    }
+  }
+
+  // Recupera la reproducción cuando el usuario vuelve a la invitación.
+  async function resumeFromBackground() {
+    const ctx = context;
+
+    if (!ctx || document.hidden || !enabled || !resumeAudioAfterBackground) {
+      return false;
+    }
+
+    if (backgroundSuspendPromise) {
+      await backgroundSuspendPromise;
+      backgroundSuspendPromise = null;
+    }
+
+    // Comprobar nuevamente por si el usuario volvió a salir.
+    if (document.hidden || !enabled) {
+      return false;
+    }
+
+    if (ctx.state === "suspended" || ctx.state === "interrupted") {
+      try {
+        await ctx.resume();
+      } catch (_) {
+        // Algunos móviles requieren una interacción del usuario.
+        return false;
+      }
+    }
+
+    if (ctx.state === "running" && !document.hidden && enabled) {
+      resumeAudioAfterBackground = false;
+      contextWasRunning = true;
+      return true;
+    }
+
+    return false;
   }
 
   function powerOn() {
@@ -536,4 +633,32 @@
     shatter,
     levelUp,
   };
+  // Detectar cuándo el usuario cambia de aplicación o bloquea el móvil.
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      pauseForBackground();
+    } else {
+      void resumeFromBackground();
+    }
+  });
+
+  // Respaldo para navegadores móviles.
+  window.addEventListener("pagehide", pauseForBackground);
+
+  window.addEventListener("pageshow", () => {
+    if (!document.hidden) {
+      void resumeFromBackground();
+    }
+  });
+
+  // Algunos navegadores necesitan un nuevo gesto para reactivar el audio.
+  document.addEventListener(
+    "pointerdown",
+    () => {
+      if (!document.hidden) {
+        void resumeFromBackground();
+      }
+    },
+    { passive: true },
+  );
 })();

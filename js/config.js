@@ -129,7 +129,7 @@ window.INVITE_CONFIG = {
     {
       image: "assets/images/personajes/Billy.png",
       edge: "left",
-      position: 64,
+      position: 62,
       size: 164,
       peek: 106,
       float: 7,
@@ -139,7 +139,7 @@ window.INVITE_CONFIG = {
     {
       image: "assets/images/personajes/Mandy.png",
       edge: "left",
-      position: 80,
+      position: 78,
       size: 160,
       peek: 103,
       float: 6,
